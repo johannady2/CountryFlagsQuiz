@@ -36,10 +36,9 @@ let currentQuestion = {};
 // GET home page
 app.get("/", (req, res) =>
 {
-  //console.log("test" + JSON.stringify(quiz[0].name));
+  //console.log("answer:" + JSON.stringify(quiz[0].name));
   totalCorrect = 0;
   nextQuestion();
-  console.log("test2" + currentQuestion.flag);
   res.render("index.ejs", { question:  emojiToISO(currentQuestion.flag) });
 });
 
@@ -47,7 +46,12 @@ app.get("/", (req, res) =>
 app.post("/submit", (req, res) => {
   let answer = req.body.answer.trim();
   let isCorrect = false;
-  if (currentQuestion.capital.toLowerCase() === answer.toLowerCase()) {
+
+  console.log("answer in lower case:" + currentQuestion.name.toLowerCase());
+    console.log("user's answer in lower case:" + answer.toLowerCase());
+  
+  if (currentQuestion.name.toLowerCase() === answer.toLowerCase())
+  {
     totalCorrect++;
     console.log(totalCorrect);
     isCorrect = true;
@@ -55,7 +59,7 @@ app.post("/submit", (req, res) => {
 
   nextQuestion();
   res.render("index.ejs", {
-    question: currentQuestion,
+    question: emojiToISO(currentQuestion.flag),
     wasCorrect: isCorrect,
     totalScore: totalCorrect,
   });
@@ -64,6 +68,7 @@ app.post("/submit", (req, res) => {
 function nextQuestion() {
   const randomCountry = quiz[Math.floor(Math.random() * quiz.length)];
   currentQuestion = randomCountry;
+  console.log("nextQuestion answer:" + currentQuestion.name);
 }
 
 function emojiToISO(emoji) {
