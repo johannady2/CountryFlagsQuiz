@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flag Quiz</title>
   <link rel="stylesheet" href="/styles/main.css">
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons/css/flag-icons.min.css">
+
 </head>
 
 <body id="app">
@@ -20,9 +22,11 @@
 
     </div>
 
-    <h1 id="countryFlag">
-      <%=question.flag %>
-    </h1>
+<h1 id="countryFlag">
+<span class="fi fi-<%= question %>"></span>
+
+</h1>
+
     <div class="answer-container">
       <input type="text" name="answer" id="userInput" placeholder="Name the country" autofocus autocomplete="off">
 

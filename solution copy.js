@@ -33,24 +33,12 @@ app.use(express.static("public"));
 
 let currentQuestion = {};
 
-
-function emojiToISO(emoji) {
-  if (!emoji) return "";
-  const codePoints = [...emoji].map(c => c.codePointAt(0));
-  // Regional indicator symbols start at 127462 ("A")
-  return codePoints
-    .map(cp => String.fromCharCode(cp - 127397))
-    .join("")
-    .toLowerCase();
-}
-
-
 // GET home page
 app.get("/", async (req, res) => {
   totalCorrect = 0;
   await nextQuestion();
-  console.log(emojiToISO(currentQuestion.flag));
-  res.render("index.ejs", { question: emojiToISO(currentQuestion.flag) });
+  console.log(currentQuestion);
+  res.render("index.ejs", { question: currentQuestion });
 });
 
 // POST a new post
@@ -65,7 +53,7 @@ app.post("/submit", (req, res) => {
 
   nextQuestion();
   res.render("index.ejs", {
-    question: emojiToISO(currentQuestion.flag),
+    question: currentQuestion,
     wasCorrect: isCorrect,
     totalScore: totalCorrect,
   });
